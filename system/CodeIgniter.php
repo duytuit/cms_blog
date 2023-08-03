@@ -186,7 +186,7 @@ class CodeIgniter
       //  $this->initializeKint();
 
         if (! CI_DEBUG) {
-            Kint::$enabled_mode = false; // @codeCoverageIgnore
+          //  Kint::$enabled_mode = false; // @codeCoverageIgnore
         }
     }
 
