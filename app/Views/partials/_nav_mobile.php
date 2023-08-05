@@ -78,21 +78,7 @@
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <?php if ($generalSettings->multilingual_system == 1 && count($languages) > 1): ?>
-                    <div class="dropdown dropdown-mobile-languages dropup">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false"><i class="icon-language"></i><?= esc($activeLang->name); ?>&nbsp;<span class="icon-arrow-down"></span></a>
-                        <ul class="dropdown-menu dropdown-lang">
-                            <?php
-                            foreach ($languages as $language):
-                                $langUrl = base_url($language->short_form);
-                                if ($language->id == $generalSettings->site_lang) {
-                                    $langUrl = base_url();
-                                } ?>
-                                <li><a href="<?= $langUrl; ?>" class="<?= $language->id == $activeLang->id ? 'selected' : ''; ?> "><?= esc($language->name); ?></a></li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </div>
-                <?php endif; ?>
+             
             </div>
             <div class="col-sm-12 mobile-mode-switcher">
                 <form action="<?= base_url('inf-switch-mode'); ?>" method="post">

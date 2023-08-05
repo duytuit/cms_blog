@@ -54,27 +54,7 @@
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
                     <li><a class="btn btn-sm btn-success pull-left btn-site-prev" target="_blank" href="<?= base_url(); ?>"><i class="fa fa-eye"></i> <?= trans("view_site"); ?></a></li>
-                    <?php if ($generalSettings->multilingual_system == 1 && itemCount($languages) > 1): ?>
-                        <li class="dropdown user-menu">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                                <i class="fa fa-globe"></i>&nbsp;
-                                <?= esc($activeLang->name); ?>
-                                <span class="fa fa-caret-down"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <?php if (!empty($languages)):
-                                    foreach ($languages as $language): ?>
-                                        <li>
-                                            <form action="<?= base_url('AdminController/setActiveLanguagePost'); ?>" method="post">
-                                                <?= csrf_field(); ?>
-                                                <button type="submit" value="<?php echo $language->id; ?>" name="lang_id" class="control-panel-lang-btn"><?php echo limitCharacter($language->name, 20, '...'); ?></button>
-                                            </form>
-                                        </li>
-                                    <?php endforeach;
-                                endif; ?>
-                            </ul>
-                        </li>
-                    <?php endif; ?>
+         
 
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
