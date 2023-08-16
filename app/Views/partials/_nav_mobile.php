@@ -16,9 +16,9 @@
     </div>
 </div>
 <div id="navMobile" class="nav-mobile">
-    <div class="nav-mobile-logo">
+    <!-- <div class="nav-mobile-logo">
         <a href="<?= langBaseUrl(); ?>"><img src="<?= getLogo($generalSettings); ?>" alt="logo" width="180" height="50"></a>
-    </div>
+    </div> -->
     <a href="javascript:void(0)" class="btn-close-mobile-nav"><i class="icon-close"></i></a>
     <div class="nav-mobile-inner">
         <div class="row">
