@@ -67,7 +67,7 @@ class LanguageModel extends Model
             'vk_url' => "",
             'telegram_url' => "",
             'youtube_url' => "",
-            'optional_url_button_name' => "Click Here To See More",
+            'optional_url_button_name' => "Từ nguồn",
             'about_footer' => "",
             'contact_text' => "",
             'contact_address' => "",

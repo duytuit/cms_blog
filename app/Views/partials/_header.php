@@ -9,7 +9,7 @@
     <meta name="keywords" content="<?= esc($keywords); ?>"/>
     <meta name="author" content="<?= esc($settings->application_name); ?>"/>
     <meta name="robots" content="all"/>
-    <meta name="revisit-after" content="1 Days"/>
+    <meta name="revisit-after" content="1 Ngày"/>
     <meta property="og:locale" content="<?= $activeLang->language_code ?>"/>
     <meta property="og:site_name" content="<?= esc($settings->application_name); ?>"/>
 <?php if (isset($pageType)): ?>
