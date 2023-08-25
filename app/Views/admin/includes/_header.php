@@ -42,6 +42,7 @@
             sysLangId: '<?= $activeLang->id; ?>'
         };
     </script>
+    <meta name="facebook-domain-verification" content="ayga8q4beg8nyl8srtxjs6n593ccdn" />
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
