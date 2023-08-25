@@ -5,8 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><?= htmlspecialchars($title); ?> - <?= trans("admin"); ?>&nbsp;<?= htmlspecialchars($settings->site_title); ?></title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <meta name="verify-admitad" content="7d346d9505" />
-    <meta name="facebook-domain-verification" content="ayga8q4beg8nyl8srtxjs6n593ccdn" />
     <?php if (empty($generalSettings->favicon_path)): ?>
         <link rel="shortcut icon" type="image/png" href="<?= base_url('assets/img/favicon.png'); ?>"/>
     <?php else: ?>

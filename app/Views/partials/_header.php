@@ -12,6 +12,8 @@
     <meta name="revisit-after" content="1 Ngày"/>
     <meta property="og:locale" content="<?= $activeLang->language_code ?>"/>
     <meta property="og:site_name" content="<?= esc($settings->application_name); ?>"/>
+    <meta name="facebook-domain-verification" content="ayga8q4beg8nyl8srtxjs6n593ccdn" />
+    <meta name="verify-admitad" content="7d346d9505" />
 <?php if (isset($pageType)): ?>
     <meta property="og:type" content="<?= $ogType; ?>"/>
     <meta property="og:title" content="<?= esc($post->title); ?>"/>
