@@ -1439,3 +1439,35 @@ if (!function_exists('checkPermission')) {
         }
     }
 }
+
+//toc post
+if (!function_exists('generateTocHeadLines')) {
+    function generateToc($html)
+    {
+        preg_match_all('/<h([1-6])*[^>]*>(.*?)<\/h[1-6]>/',$html , $matches);
+        $index = "<div class='layout_toc'>
+        <div class='toc_title' >Mục lục</div>
+        <div class='toc_content'>
+        <ul>";
+        $prev = 2;
+        foreach ($matches[0] as $i => $match) {
+
+            $curr = $matches[1][$i];
+            $text = strip_tags($matches[2][$i]);
+            $slug = strtolower(str_replace("--", "-", preg_replace('/[^\da-z]/i', '-', $text)));
+            $anchor = '<a name="' . $slug . '">' . $text . '</a>';
+            $html = str_replace($text, $anchor, $html);
+
+            $prev <= $curr ?: $index .= str_repeat('</ul>', ($prev - $curr));
+            $prev >= $curr ?: $index .= "<ul style='margin-left: -10px;'>";
+
+            $index .= '<li><a href="#' . $slug . '">' . $text . '</a></li>';
+
+            $prev = $curr;
+        }
+
+        $index .= "</ul></ul><div class='toc_more'>Xem thêm</div></div></div>";
+        echo $index;
+       // return ["html" => $html, "index" => $index];
+    }
+}

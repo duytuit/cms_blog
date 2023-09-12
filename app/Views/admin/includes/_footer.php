@@ -98,7 +98,7 @@
         relative_urls: false,
         remove_script_host: false,
         directionality: directionality,
-        language: '<?= $activeLang->text_editor_lang; ?>',
+        language: 'en',
         menubar: 'file edit view insert format tools table help',
         plugins: [
             "advlist autolink lists link image charmap print preview anchor",

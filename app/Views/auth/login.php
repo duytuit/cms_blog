@@ -24,7 +24,7 @@
                                 </a>
                             <?php endif; ?>
                             <?php if (!empty($generalSettings->google_client_id)): ?>
-                                <a href="<?= base_url('connect-with-google'); ?>" class="btn btn-social btn-social-google">
+                                <a rel="nofollow" href="<?= base_url('connect-with-google'); ?>" class="btn btn-social btn-social-google">
                                     <svg width="24" height="24" viewBox="0 0 128 128">
                                         <rect clip-rule="evenodd" fill="none" fill-rule="evenodd" height="128" width="128"/>
                                         <path clip-rule="evenodd" d="M27.585,64c0-4.157,0.69-8.143,1.923-11.881L7.938,35.648    C3.734,44.183,1.366,53.801,1.366,64c0,10.191,2.366,19.802,6.563,28.332l21.558-16.503C28.266,72.108,27.585,68.137,27.585,64" fill="#FBBC05" fill-rule="evenodd"/>

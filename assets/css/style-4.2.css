@@ -4162,16 +4162,15 @@ img {
 
 .reactions .icon-cnt {
     display: block;
-    width: 100%;
-    height: 75px;
+    height: 35px;
     float: left;
     position: relative;
     text-align: center;
 }
 
 .reactions .img-reaction {
-    width: 75px;
-    height: 75px;
+    width: 50px;
+    height: 50px;
 }
 
 .reaction-num-votes {
@@ -5190,7 +5189,7 @@ Responsive CSS Fixes
 
     .reactions .col-reaction {
         margin-right: 3.8px;
-        width: 30.2%;
+        width: 15.2%;
     }
 
     .recaptcha-cnt .g-recaptcha {
