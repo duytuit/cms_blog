@@ -1441,7 +1441,7 @@ if (!function_exists('checkPermission')) {
 }
 
 //toc post
-if (!function_exists('generateTocHeadLines')) {
+if (!function_exists('generateToc')) {
     function generateToc($html)
     {
         preg_match_all('/<h([1-6])*[^>]*>(.*?)<\/h[1-6]>/',$html , $matches);
@@ -1467,7 +1467,11 @@ if (!function_exists('generateTocHeadLines')) {
         }
 
         $index .= "</ul></ul><div class='toc_more'>Xem thêm</div></div></div>";
-        echo $index;
+        if(count($matches[2]) > 0){
+            return true;
+        }else{
+            return false;
+        } 
        // return ["html" => $html, "index" => $index];
     }
 }

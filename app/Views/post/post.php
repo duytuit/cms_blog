@@ -24,11 +24,13 @@
                                 <h2><?= $post->summary; ?></h2>
                             </div>
                         <?php endif; ?>
-                        <div class='layout_toc'>
-                            <div class='toc_title'>Mục lục</div>
-                            <div class='toc_content' id="toc">
+                        <?php if (generateToc($post->content)) : ?>
+                            <div class='layout_toc'>
+                                <div class='toc_title'>Mục lục</div>
+                                <div class='toc_content' id="toc">
+                                </div>
                             </div>
-                        </div>
+                        <?php endif; ?>
                         <div class="post-meta">
                             <?php if (!empty($category) && !empty($category->parent_id)) :
                                 $parent = getCategory($category->parent_id);
@@ -341,45 +343,157 @@ endif; ?>
         -webkit-transform: rotate(45deg);
         transform: rotate(45deg);
     }
+
     li {
         list-style: none;
     }
-    ul{
+
+    ul {
         margin-left: -25px;
     }
+
     #toc {
         max-height: 200px;
         padding: 1rem;
         overflow-y: auto;
     }
+
     #toc a:hover {
         text-decoration: underline;
     }
+
     #toc .toc-active {
         font-weight: bold;
         color: #2563eb;
     }
+
     #toc .toc-item {
         padding: 0.1em 0;
     }
+
     #toc .toc-item a {
         padding: 0.25em 0.5em;
     }
+
     #toc .toc-h2 {
         margin-left: 0.5em;
     }
+
     #toc .toc-h3 {
         margin-left: 1.75em;
     }
+
     #toc .toc-h4 {
         margin-left: 3em;
     }
+
     #toc .toc-h5 {
         margin-left: 4.25em;
     }
+
     #toc .toc-h6 {
         margin-left: 5.5em;
     }
+
+    .best_offer_top {
+        background-color: #0494b1;
+        text-align: left;
+        padding: 0.6em 1em;
+        color: #fff;
+    }
+
+    .best_offer {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin: 20px auto;
+        overflow: hidden;
+    }
+
+    .best_offer_list .item:not(:last-child) {
+        border-bottom: 1px solid #ccc;
+    }
+
+    .best_offer_list .item {
+        padding: 1em;
+        background-color: #fdfdfd;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+    }
+
+    .best_offer_list .item .cell {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 calc(100%/3);
+        flex: 0 0 calc(100%/3);
+        width: calc(100%/3);
+    }
+
+    .best_offer_list .item_image {
+        text-align: left;
+    }
+
+    .best_offer_list .item .cell {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 calc(100%/3);
+        flex: 0 0 calc(100%/3);
+        width: calc(100%/3);
+    }
+
+    .best_offer_list .item_price {
+        text-align: center;
+        color: black;
+    }
+
+    .ck-content.desktop .best_offer_list .item_link {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: end;
+        -ms-flex-pack: end;
+        justify-content: flex-end;
+    }
+
+    .best_offer_list .item .cell {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 calc(100%/3);
+        flex: 0 0 calc(100%/3);
+        width: calc(100%/3);
+    }
+
+    .best_offer_list .item_link {
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    .best_offer_list .item .cell * {
+        margin: 0;
+    }
+
+    .best_offer_list .item_image img {
+        max-height: 50px !important;
+        max-width: 100px !important;
+        -o-object-fit: contain !important;
+        object-fit: contain !important;
+        pointer-events: none;
+    }
+
+    .ck-content .img-loading-content {
+        max-width: 100%;
+    }
+
+    .best_offer_list .item_image * {
+        text-align: left !important;
+    }
+
     @media (max-width: 767px) {
         .reactions .col-reaction {
             margin-right: 3.8px;
