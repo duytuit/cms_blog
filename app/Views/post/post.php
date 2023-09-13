@@ -24,6 +24,11 @@
                                 <h2><?= $post->summary; ?></h2>
                             </div>
                         <?php endif; ?>
+                        <div class='layout_toc'>
+                            <div class='toc_title'>Mục lục</div>
+                            <div class='toc_content' id="toc">
+                            </div>
+                        </div>
                         <div class="post-meta">
                             <?php if (!empty($category) && !empty($category->parent_id)) :
                                 $parent = getCategory($category->parent_id);
@@ -336,7 +341,45 @@ endif; ?>
         -webkit-transform: rotate(45deg);
         transform: rotate(45deg);
     }
-
+    li {
+        list-style: none;
+    }
+    ul{
+        margin-left: -25px;
+    }
+    #toc {
+        max-height: 200px;
+        padding: 1rem;
+        overflow-y: auto;
+    }
+    #toc a:hover {
+        text-decoration: underline;
+    }
+    #toc .toc-active {
+        font-weight: bold;
+        color: #2563eb;
+    }
+    #toc .toc-item {
+        padding: 0.1em 0;
+    }
+    #toc .toc-item a {
+        padding: 0.25em 0.5em;
+    }
+    #toc .toc-h2 {
+        margin-left: 0.5em;
+    }
+    #toc .toc-h3 {
+        margin-left: 1.75em;
+    }
+    #toc .toc-h4 {
+        margin-left: 3em;
+    }
+    #toc .toc-h5 {
+        margin-left: 4.25em;
+    }
+    #toc .toc-h6 {
+        margin-left: 5.5em;
+    }
     @media (max-width: 767px) {
         .reactions .col-reaction {
             margin-right: 3.8px;
@@ -351,45 +394,113 @@ endif; ?>
             $(".layout_toc").toggleClass("hide_1");
             $(".toc_content").toggleClass("hide");
         });
+        // Lấy tất cả các heading trong bài viết
         const headings = document.querySelectorAll('.post-text h1, .post-text h2, .post-text h3, .post-text h4, .post-text h5, .post-text h6')
-        console.log(headings);
+        if (headings.length === 0) return
+
+        // Khai bào nơi mà TOC sẽ được chèn vào
+        const tocContainer = document.querySelector('.toc_content')
+
+        // Xác định cấp độ bắt đầu của TOC (bởi vì không phải bài viết nào cũng có thẻ H1, hoặc H2)
+        const startingLevel = headings[0].tagName[1]
+
+        // Tạo TOC rỗng
+        const toc = document.createElement('ul')
+
+        // Theo dõi các cấp độ heading trước đó
+        const prevLevels = [0, 0, 0, 0, 0, 0]
+
+        // Lặp qua từng heading và thêm chúng vào TOC
         for (let i = 0; i < headings.length; i++) {
             const heading = headings[i]
+            const level = parseInt(heading.tagName[1])
+
+            // Tăng các cấp độ trước đó lên đến cấp độ hiện tại
+            prevLevels[level - 1]++
+            for (let j = level; j < prevLevels.length; j++) {
+                prevLevels[j] = 0
+            }
+
+            // Tạo số mục cho mục đó dựa trên các cấp độ trước đó
+            // và loại bỏ số 0 nếu trường hợp h1 -> h3 (không có h2)
+            // Sẽ tạo ra các đề mục ví dụ như:
+            // 1. Heading h1a
+            //     1.1 Heading h2
+            // 2. Heading h1b
+            //          2.1 Heading h3 (đẹp hơn 2.0.1 Heading h3)
+            const sectionNumber = prevLevels.slice(startingLevel - 1, level).join('.').replace(/\.0/g, "")
+
             // Tạo ID mới và gán vào heading
             // Phải làm phần này để click vào mục lục có thể di chuyển đến được.
             const newHeadingId = `${heading.textContent.toLowerCase().replace(/ /g, '-')}`
             heading.id = toSlug(newHeadingId)
+
+            // Tạo liên kết mục cho heading
+            const anchor = document.createElement('a')
+            anchor.setAttribute('href', `#${toSlug(newHeadingId)}`)
+            anchor.textContent = heading.textContent
+
+            // Thêm event listener để cuộn đến liên kết khi nhấp chuột
+            anchor.addEventListener('click', (event) => {
+                event.preventDefault()
+                const targetId = event.target.getAttribute('href').slice(1)
+                const targetElement = document.getElementById(targetId)
+                targetElement.scrollIntoView({
+                    behavior: 'smooth'
+                })
+                // Thêm anchor vào URL khi click
+                history.pushState(null, null, `#${targetId}`)
+            })
+
+            // Tạo thẻ <li> để thêm vào TOC
+            const listItem = document.createElement('li')
+            listItem.textContent = sectionNumber
+            listItem.appendChild(anchor)
+
+            // Thêm CSS class cho từng mục lục
+            // Ví dụ "toc-item toc-h1", "toc-item toc-h2"
+            const className = `toc-${heading.tagName.toLowerCase()}`
+            listItem.classList.add('toc-item')
+            listItem.classList.add(className)
+
+            // Bỏ thẻ <li> vừa tạo vào TOC
+            toc.appendChild(listItem)
         }
+
+        // Thêm các TOC item vào toc contaner
+        tocContainer.innerHTML = ''
+        tocContainer.appendChild(toc)
     });
+
     function toSlug(str) {
-	// Chuyển hết sang chữ thường
-	str = str.toLowerCase();     
- 
-	// xóa dấu
-	str = str.replace(/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/g, 'a');
-	str = str.replace(/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/g, 'e');
-	str = str.replace(/(ì|í|ị|ỉ|ĩ)/g, 'i');
-	str = str.replace(/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/g, 'o');
-	str = str.replace(/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/g, 'u');
-	str = str.replace(/(ỳ|ý|ỵ|ỷ|ỹ)/g, 'y');
-	str = str.replace(/(đ)/g, 'd');
- 
-	// Xóa ký tự đặc biệt
-	str = str.replace(/([^0-9a-z-\s])/g, '');
- 
-	// Xóa khoảng trắng thay bằng ký tự -
-	str = str.replace(/(\s+)/g, '-');
-	
-	// Xóa ký tự - liên tiếp
-	str = str.replace(/-+/g, '-');
- 
-	// xóa phần dự - ở đầu
-	str = str.replace(/^-+/g, '');
- 
-	// xóa phần dư - ở cuối
-	str = str.replace(/-+$/g, '');
- 
-	// return
-	return str;
-}
+        // Chuyển hết sang chữ thường
+        str = str.toLowerCase();
+
+        // xóa dấu
+        str = str.replace(/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/g, 'a');
+        str = str.replace(/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/g, 'e');
+        str = str.replace(/(ì|í|ị|ỉ|ĩ)/g, 'i');
+        str = str.replace(/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/g, 'o');
+        str = str.replace(/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/g, 'u');
+        str = str.replace(/(ỳ|ý|ỵ|ỷ|ỹ)/g, 'y');
+        str = str.replace(/(đ)/g, 'd');
+
+        // Xóa ký tự đặc biệt
+        str = str.replace(/([^0-9a-z-\s])/g, '');
+
+        // Xóa khoảng trắng thay bằng ký tự -
+        str = str.replace(/(\s+)/g, '-');
+
+        // Xóa ký tự - liên tiếp
+        str = str.replace(/-+/g, '-');
+
+        // xóa phần dự - ở đầu
+        str = str.replace(/^-+/g, '');
+
+        // xóa phần dư - ở cuối
+        str = str.replace(/-+$/g, '');
+
+        // return
+        return str;
+    }
 </script>
