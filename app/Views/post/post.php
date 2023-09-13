@@ -256,90 +256,140 @@ endif; ?>
         border: 1px dashed #ccc;
         margin-bottom: 2em;
     }
+
     .toc_title {
-    display: block;
-    font-weight: 700;
-    text-align: center!important;
-    cursor: pointer;
-    margin-bottom: 0!important;
-    line-height: 30px;
-    position: relative;
-    background-color: #0494b1;
-}
-.toc_title:after {
-    position: absolute;
-    right: 20px;
-    content: "";
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    top: 12px;
-    line-height: 25px;
-    border: solid #333;
-    border-width: 0 1px 1px 0;
-    -webkit-transform: rotate(-135deg);
-    transform: rotate(-135deg);
-    height: 12px;
-    width: 12px;
-    transition: .2s;
-    -webkit-transition: .2s;
-}
-.toc_more{
-    clear: both;
-    text-align: center;
-    margin: 10px 0;
-    cursor: pointer;
-}
-.reactions .img-reaction {
-    width: 50px;
-    height: 50px;
-}
+        display: block;
+        font-weight: 700;
+        text-align: center !important;
+        cursor: pointer;
+        margin-bottom: 0 !important;
+        line-height: 30px;
+        position: relative;
+        background-color: #0494b1;
+    }
+
+    .toc_title:after {
+        position: absolute;
+        right: 20px;
+        content: "";
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        top: 12px;
+        line-height: 25px;
+        border: solid #333;
+        border-width: 0 1px 1px 0;
+        -webkit-transform: rotate(-135deg);
+        transform: rotate(-135deg);
+        height: 12px;
+        width: 12px;
+        transition: .2s;
+        -webkit-transition: .2s;
+    }
+
+    .toc_more {
+        clear: both;
+        text-align: center;
+        margin: 10px 0;
+        cursor: pointer;
+    }
+
+    .reactions .img-reaction {
+        width: 50px;
+        height: 50px;
+    }
 
     .reactions .icon-cnt {
-    display: block;
-    width: 100%;
-    height: 35px;
-    float: left;
-    position: relative;
-    text-align: center;
-}
-.reaction-num-votes {
-    top: 1px;
-    right: 13px;
-}
-.reactions {
-       margin-bottom:0;
-}
-.about-author {
-    margin-top: 0px;
-}
-.reactions .col-reaction {
-   margin-bottom: 0px;
-}
-.layout_toc.hide_1 .toc_title:after {
-    top: 5px;
-    -webkit-transform: rotate(45deg);
-    transform: rotate(45deg);
-}
-@media (max-width: 767px) {
-    .reactions .col-reaction {
-        margin-right: 3.8px;
-        width: 15.2%;
+        display: block;
+        width: 100%;
+        height: 35px;
+        float: left;
+        position: relative;
+        text-align: center;
     }
-}
+
+    .reaction-num-votes {
+        top: 1px;
+        right: 13px;
+    }
+
+    .reactions {
+        margin-bottom: 0;
+    }
+
+    .about-author {
+        margin-top: 0px;
+    }
+
+    .reactions .col-reaction {
+        margin-bottom: 0px;
+    }
+
+    .layout_toc.hide_1 .toc_title:after {
+        top: 5px;
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+
+    @media (max-width: 767px) {
+        .reactions .col-reaction {
+            margin-right: 3.8px;
+            width: 15.2%;
+        }
+    }
 </style>
 <script src="<?= base_url('assets/js/jquery-1.12.4.min.js'); ?>"></script>
 <script>
-     $(document).ready(function(){
-       $(".toc_title").click(function(){
+    $(document).ready(function() {
+        $(".toc_title").click(function() {
             $(".layout_toc").toggleClass("hide_1");
             $(".toc_content").toggleClass("hide");
         });
+        const headings = document.querySelectorAll('.post-text h1, .post-text h2, .post-text h3, .post-text h4, .post-text h5, .post-text h6')
+        console.log(headings);
+        for (let i = 0; i < headings.length; i++) {
+            const heading = headings[i]
+            // Tạo ID mới và gán vào heading
+            // Phải làm phần này để click vào mục lục có thể di chuyển đến được.
+            const newHeadingId = `${heading.textContent.toLowerCase().replace(/ /g, '-')}`
+            heading.id = toSlug(newHeadingId)
+        }
     });
+    function toSlug(str) {
+	// Chuyển hết sang chữ thường
+	str = str.toLowerCase();     
+ 
+	// xóa dấu
+	str = str.replace(/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/g, 'a');
+	str = str.replace(/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/g, 'e');
+	str = str.replace(/(ì|í|ị|ỉ|ĩ)/g, 'i');
+	str = str.replace(/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/g, 'o');
+	str = str.replace(/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/g, 'u');
+	str = str.replace(/(ỳ|ý|ỵ|ỷ|ỹ)/g, 'y');
+	str = str.replace(/(đ)/g, 'd');
+ 
+	// Xóa ký tự đặc biệt
+	str = str.replace(/([^0-9a-z-\s])/g, '');
+ 
+	// Xóa khoảng trắng thay bằng ký tự -
+	str = str.replace(/(\s+)/g, '-');
+	
+	// Xóa ký tự - liên tiếp
+	str = str.replace(/-+/g, '-');
+ 
+	// xóa phần dự - ở đầu
+	str = str.replace(/^-+/g, '');
+ 
+	// xóa phần dư - ở cuối
+	str = str.replace(/-+$/g, '');
+ 
+	// return
+	return str;
+}
 </script>
